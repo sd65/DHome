@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { hueSwitchesAll, hueSwitchesAllGetStatus } from '../actions/hueSwitches';
 
 class HueSwitches extends Component {
-  
+
   componentDidMount() {
     this.props.hueSwitchesAllGetStatus()
   }
   
-  handleClick() {
+  onChange () {
     this.props.hueSwitchesAll((this.props.allOn) ? false : true)
     this.props.hueSwitchesAllGetStatus()
   }
@@ -16,14 +16,23 @@ class HueSwitches extends Component {
   render () {
     return (
       <div className="hueSwitches"> 
-        <span className="switch">
-          <input type="checkbox" onChange={(e) => this.handleClick(e)} className="switch" id="switchAll" checked={ (this.props.allOn) ? "checked" : null}/>
-          <label htmlFor="switchAll">All</label>
-        </span>
+        <HueSwitch name="All" onChange={this.onChange.bind(this)} on={this.props.allOn}/>
+        <HueSwitch name="Bowl" on={true}/>
+        <HueSwitch name="Roof" on={true}/>
+        <HueSwitch name="Spot" on={true}/>
       </div>
     )
   }
 
+}
+
+function HueSwitch (props) {
+  return (
+    <span className="switch" onClick={(e) => props.onChange(e)}>
+      <input type="checkbox" className="switch" checked={ (props.on) ? "checked" : null}/>
+      <label htmlFor="switchAll">{props.name}</label>
+    </span>
+  )
 }
 
 const mapStateToProps = (state) => {
