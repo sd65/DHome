@@ -27,17 +27,17 @@ class CurrentMetrics extends Component {
 
 function CurrentTemperature(props) {
   return (
-    <span className="CurrentTemperature"> 
+    <div className="CurrentTemperature text-center"> 
       { (props.value || "-") + "°C" }
-    </span>
+    </div>
   )
 }
 
 function CurrentHumidity(props) {
   return (
-    <span className="CurrentHumidity"> 
+    <div className="CurrentHumidity text-center"> 
       { (props.value || "-") + "%" }
-    </span>
+    </div>
   )
 }
 
@@ -45,9 +45,9 @@ function CurrentBarometricTendency(props) {
   let s = (props.tendency === 1) ? "↗" : (props.tendency === -1) ? "↘" : "→"
   s += "hPa"
   return (
-    <span className="CurrentBarometricTendency"> 
+    <div className="CurrentBarometricTendency text-center"> 
       { s }
-    </span>
+    </div>
   )
 }
 

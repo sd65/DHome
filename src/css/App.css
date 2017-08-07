@@ -1,5 +1,10 @@
-.App {
-  text-align: center;
-  background-color: #222;
-  color: white;
+:root {
+}
+
+.App-header {
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.App-header > div{
 }

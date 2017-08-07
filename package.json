@@ -18,7 +18,8 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^6.6.0"
+    "eslint-plugin-react": "^6.6.0",
+    "shoelace-css": "^1.0.0-beta8"
   },
   "author": "",
   "license": "MIT",
