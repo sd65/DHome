@@ -15,10 +15,10 @@ class HueSwitches extends Component {
 
   render () {
     return (
-      <div className="hueSwitches"> 
+      <div className="HueSwitches"> 
         <HueSwitch name="All" onChange={this.onChange.bind(this)} on={this.props.allOn}/>
-        <HueSwitch name="Bowl" on={true}/>
         <HueSwitch name="Roof" on={true}/>
+        <HueSwitch name="Bowl" on={true}/>
         <HueSwitch name="Spot" on={true}/>
       </div>
     )
@@ -29,7 +29,7 @@ class HueSwitches extends Component {
 function HueSwitch (props) {
   return (
     <span className="switch" onClick={(e) => props.onChange(e)}>
-      <input type="checkbox" className="switch" checked={ (props.on) ? "checked" : null}/>
+      <input type="checkbox" className="switch" readOnly checked={ (props.on) ? "checked" : null}/>
       <label htmlFor="switchAll">{props.name}</label>
     </span>
   )

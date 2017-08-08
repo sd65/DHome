@@ -6,13 +6,30 @@
   grid-template-columns: 33.3% 33.3% 33.3%;
 }
 
-.hueSwitches, .CurrentMetrics, .Today {
+.ForecastsDays {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+.HueSwitches, .CurrentMetrics, .Today, .dayForecast {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 }
 
-.CurrentMetrics {
+.CurrentMetrics > div {
+  margin-top: 20px;
+}
 
+.Today > div {
+  margin-top: 20px;
+}
+
+.HueSwitches > span:first-child {
+  margin-bottom: 10px;
+}
+
+.hasRain {
+  color: blue
 }
