@@ -7,7 +7,7 @@ export function hueSwitchesDisconnected(state = false, action) {
     }
 }
 
-export function hueSwitchesAllStatus(state = false, action) {
+export function hueSwitchesAllStatus(state = [], action) {
     switch (action.type) {
         case 'HUE_SWITCHES_ALL_STATUS':
             return action.status;

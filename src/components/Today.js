@@ -3,7 +3,6 @@ import React from 'react';
 function Today(props) {
   return (
     <div className="Today">
-      <div>Today</div> 
       <CurrentTime/>
       <CurrentDate/>
     </div>
@@ -35,9 +34,11 @@ class CurrentTime extends React.Component {
 
   render() {
     return (
-      <div className="CurrentTime"> 
-        { this.state.date.toLocaleTimeString("fr-FR") }
-      </div>
+      <h2>
+        <span className="CurrentTime"> 
+          { this.state.date.toLocaleTimeString("fr-FR") }
+        </span>
+      </h2>
     )
   }
 }
@@ -81,9 +82,11 @@ class CurrentDate extends React.Component {
 
   render() {
     return (
-      <div className="CurrentDate"> 
-        { this.state.date.toLocaleDateString("fr-FR") }
-      </div>
+      <h2>
+        <span className="CurrentDate"> 
+          { this.state.date.toLocaleDateString("fr-FR") }
+        </span>
+      </h2>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getRATPTraffic } from '../actions/RATP';
+import { getRATPTraffic, getRATPRERASchedules, getRATPBUS118Schedules } from '../actions/RATP';
 
 class RATP extends Component {
 
@@ -14,10 +14,20 @@ class RATP extends Component {
 
   componentDidMount() {
     this.fetchLastTraffic()
+    this.fetchLastSchedules()
+    setInterval(() => {
+      this.fetchLastTraffic()
+      this.fetchLastSchedules()
+    }, 16 * 1000)
   }
   
   fetchLastTraffic() {
     this.props.getRATPTraffic()
+  }
+  
+  fetchLastSchedules() {
+    this.props.getRATPRERASchedules()
+    this.props.getRATPBUS118Schedules()
   }
 
   handleClick (e) {
@@ -54,10 +64,25 @@ class RATP extends Component {
             </div>
           }
         </div>
+        <div className="Next">
+          <Timetable schedules={this.props.scheduleRERA} name="RER A"/>
+          <Timetable schedules={this.props.scheduleBUS118} name="BUS 118"/>
+        </div>
       </div>
     )
   }
 
+}
+
+function Timetable (props) {
+  return (
+    <div className="timetable">
+      <h3>{props.name}</h3>
+      {props.schedules.map((e) => {
+        return <div key={e}>{e}</div>
+      })}
+    </div>
+  )
 }
 
 function Recap (props) {
@@ -90,13 +115,17 @@ function Recap (props) {
 
 const mapStateToProps = (state) => {
     return {
-      traffic: state.getRATPTraffic
-    };
+      traffic: state.getRATPTraffic,
+      scheduleRERA: state.getRATPRERASchedules,
+      scheduleBUS118: state.getRATPBUS118Schedules,
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getRATPTraffic: () => dispatch(getRATPTraffic())
+        getRATPTraffic: () => dispatch(getRATPTraffic()),
+        getRATPRERASchedules: () => dispatch(getRATPRERASchedules()),
+        getRATPBUS118Schedules: () => dispatch(getRATPBUS118Schedules())
     };
 };
 

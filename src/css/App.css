@@ -1,9 +1,18 @@
 :root {
+  --body-bg-color: #00BCD4;
+}
+
+h1 {
+  padding: .6em 0 0;
+  color: white;
+  font-size: 3em;
 }
 
 .App-header {
   display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
+  background-color: #00BCD4;
+  padding: 3em 0;
 }
 
 .ForecastsDays {
@@ -11,8 +20,44 @@
   grid-template-columns: 20% 20% 20% 20% 20%;
 }
 
+.Weather {
+  background-color: #FFEB3B;
+  padding-top: 3em;
+}
+
+.Weather i {
+  color: white;
+}
+
+.ForecastsDays {
+  padding-bottom: 2em;
+}
+
+.RATP {
+  background-color: #009688;
+  padding: 3em 0;
+  color: white;
+}
+
+.RATP .message {
+  margin: 2em .3em 0 .3em;
+}
+
+.Next {
+  padding-top: 3em;
+}
+
+.forecastGraph, .graphMetrics {
+  background-color: white;
+}
+
 .Recap > div {
   margin-top: 10px;
+}
+
+.RATP .Next {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .Recap-metros {
@@ -30,8 +75,8 @@
   grid-template-columns: repeat(9, 1fr);
 }
 
-.Recap .message h3:first-letter{
-  text-transform: capitalize
+.Recap .message h3{
+  text-transform: uppercase
 }
 
 .Recap .travaux {
@@ -46,14 +91,18 @@
    border-radius: 33px;
 } 
 
-.HueSwitches, .CurrentMetrics, .Today, .dayForecast {
+.HueSwitches, .CurrentMetrics, .Today, .dayForecast, .timetable {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 }
 
-.CurrentMetrics > div {
+.timetable {
+  justify-content: start;
+}
+
+.CurrentMetrics > * {
   margin-top: 20px;
 }
 
@@ -67,4 +116,10 @@
 
 .hasRain {
   color: blue
+}
+
+.footer {
+  text-align: center;
+  color: white;
+  padding: 3em;
 }

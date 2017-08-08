@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import CurrentMetrics from './CurrentMetrics';
+import GraphMetrics from './graphMetrics';
 import Today from './Today';
 import HueSwitches from './hueSwitches';
 import Forecasts from './Forecasts';
@@ -17,7 +18,6 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="text-center">DHome</h1>
-        {/*
         <div className="App-header">
           <CurrentMetrics/>
           <Today/>
@@ -26,8 +26,11 @@ class App extends Component {
         <div className="Weather">
           <Forecasts/>
         </div>
-        */}
         <RATP/>
+        <GraphMetrics/>
+        <div className="footer">
+          Made with love by Sylvain DOIGNON
+        </div>
       </div>
     );
   }

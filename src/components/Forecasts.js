@@ -8,6 +8,7 @@ class Forecasts extends Component {
   
   componentDidMount() {
     this.fetchLastForecasts()
+    setInterval(() => this.fetchLastForecasts(), 20 * 60 * 1000)
   }
   
   fetchLastForecasts() {
@@ -39,7 +40,7 @@ function ForecastsGraph (props) {
       { label: "Pressure", data: props.rawData.map((e) => e.p), yAxisID: "y2", fill: false, pointStyle: "rectRot", pointRadius: 7, borderColor: colors.orange, backgroundColor: colors.orange },
       { label: "Wind", data: props.rawData.map((e) => e.w), yAxisID: "y1", fill: false, pointStyle: "rectRounded", pointRadius: 7, borderColor: colors.yellow, backgroundColor: colors.yellow },
       { label: "Rain", data: props.rawData.map((e) => e.r), yAxisID: "y1", pointStyle: "star", pointRadius: 7, borderColor: colors.purple, backgroundColor: colors.purple },
-      { label: "Clouds", data: props.rawData.map((e) => e.c), yAxisID: "y3", pointStyle: "dash", pointRadius: 7, borderColor: colors.grey, backgroundColor: colors.grey },
+      { label: "Cloudiness", data: props.rawData.map((e) => e.c), yAxisID: "y3", pointStyle: "dash", pointRadius: 7, borderColor: colors.grey, backgroundColor: colors.grey },
     ]
   }
   const labelToUnit = {
@@ -48,7 +49,7 @@ function ForecastsGraph (props) {
     "Pressure": " hPa",
     "Wind": " m/s",
     "Rain": " mm",
-    "Clouds": "%"
+    "Cloudiness": "%"
   }
   const shortDayToDay = {
     Sun: 'Sunday', 
@@ -60,6 +61,14 @@ function ForecastsGraph (props) {
     Sat: 'Saturday'
   }
   const options = {
+    title: {
+      display: true,
+      text: 'Weather Forecast',
+      fontSize: 25,
+      fontFamily: '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif',
+      fontStyle: "",
+      padding: 30
+    },
     legend: {
       labels: {
         usePointStyle: true,
@@ -104,14 +113,16 @@ function ForecastsGraph (props) {
     }
   }
   return (
-    <Line data={data} options={options}/>
+    <div className="forecastGraph">
+      <Line data={data} options={options}/>
+    </div>
   )
 }
 
 function DayForecast (props) {
   return (
     <div className="dayForecast">
-      <div>{props.dayName}</div>
+      <h3>{props.dayName}</h3>
       <i className={ "owf owf-5x owf-" + props.forecast.icon}></i>
       <div>{ props.forecast.minTemp + "°C"}</div>
       <div>{ props.forecast.maxTemp + "°C"}</div>

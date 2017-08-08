@@ -6,7 +6,7 @@ class CurrentMetrics extends Component {
   
   componentDidMount() {
     this.fetchLastMetrics()
-//    setInterval(this.fetchLastMetrics, 2500)
+    setInterval(() => this.fetchLastMetrics(), 60 * 1000)
   }
   
   fetchLastMetrics() {
@@ -27,17 +27,21 @@ class CurrentMetrics extends Component {
 
 function CurrentTemperature(props) {
   return (
-    <div className="CurrentTemperature"> 
+    <h2>
+      <span className="badge CurrentTemperature"> 
       { (props.value || "-") + "°C" }
-    </div>
+      </span>
+    </h2>
   )
 }
 
 function CurrentHumidity(props) {
   return (
-    <div className="CurrentHumidity"> 
-      { (props.value || "-") + "%" }
-    </div>
+    <h2>
+      <span className="badge CurrentHumidity"> 
+        { (props.value || "-") + "%" }
+      </span>
+    </h2>
   )
 }
 
@@ -45,9 +49,11 @@ function CurrentBarometricTendency(props) {
   let s = (props.tendency === 1) ? "↗" : (props.tendency === -1) ? "↘" : "→"
   s += "hPa"
   return (
-    <div className="CurrentBarometricTendency"> 
-      { s }
-    </div>
+    <h2>
+      <span className="badge CurrentBarometricTendency"> 
+        { s }
+      </span>
+    </h2>
   )
 }
 
