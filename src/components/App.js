@@ -4,9 +4,11 @@ import CurrentMetrics from './CurrentMetrics';
 import Today from './Today';
 import HueSwitches from './hueSwitches';
 import Forecasts from './Forecasts';
+import RATP from './RATP';
 
 import 'shoelace-css/dist/shoelace.css';
 import 'open-weather-icons/dist/css/open-weather-icons.css';
+import '../css/metrodna.css';
 import '../css/App.css';
 
 class App extends Component {
@@ -15,6 +17,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="text-center">DHome</h1>
+        {/*
         <div className="App-header">
           <CurrentMetrics/>
           <Today/>
@@ -23,6 +26,8 @@ class App extends Component {
         <div className="Weather">
           <Forecasts/>
         </div>
+        */}
+        <RATP/>
       </div>
     );
   }

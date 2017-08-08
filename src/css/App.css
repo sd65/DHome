@@ -11,6 +11,41 @@
   grid-template-columns: 20% 20% 20% 20% 20%;
 }
 
+.Recap > div {
+  margin-top: 10px;
+}
+
+.Recap-metros {
+  display: grid;
+  grid-template-columns: repeat(17, 1fr);
+}
+
+.Recap-rers {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.Recap-tramways {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.Recap .message h3:first-letter{
+  text-transform: capitalize
+}
+
+.Recap .travaux {
+   border: solid 4px #b8b8b8;
+   background-size: 100%;
+   border-radius: 33px;
+} 
+
+.Recap .pb {
+   border: solid 4px #f00;
+   background-size: 100%;
+   border-radius: 33px;
+} 
+
 .HueSwitches, .CurrentMetrics, .Today, .dayForecast {
   display: flex;
   align-items: center;

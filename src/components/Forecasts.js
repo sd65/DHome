@@ -60,10 +60,6 @@ function ForecastsGraph (props) {
     Sat: 'Saturday'
   }
   const options = {
-    title: {
-      text: "Forecasts from OpenWeatherMap",
-      display: true
-    },
     legend: {
       labels: {
         usePointStyle: true,
