@@ -2,7 +2,7 @@ import React from 'react';
 
 function Today(props) {
   return (
-    <div className="Today">
+    <div className="today">
       <CurrentTime/>
       <CurrentDate/>
     </div>

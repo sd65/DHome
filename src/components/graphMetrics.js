@@ -58,14 +58,6 @@ function GraphMetrics2 (props) {
     Sat: 'Saturday'
   }
   const options = {
-    title: {
-      display: true,
-      text: 'Sensors history',
-      fontSize: 25,
-      fontFamily: '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif',
-      fontStyle: "",
-      padding: 30
-    },
     legend: {
       labels: {
         usePointStyle: true,
@@ -115,7 +107,7 @@ function GraphMetrics2 (props) {
     }
   }
   return (
-    <div className="graphMetrics">
+    <div className="sensors-history-graph">
       <Line data={data} options={options}/>
     </div>
   )

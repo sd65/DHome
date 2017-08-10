@@ -18,18 +18,34 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="text-center">DHome</h1>
-        <div className="App-header">
-          <CurrentMetrics/>
-          <Today/>
-          <HueSwitches/>
-        </div>
-        <div className="Weather">
-          <Forecasts/>
-        </div>
-        <RATP/>
-        <GraphMetrics/>
+        <section className="today">
+          <h2>Now</h2>
+          <div className="content">
+            <CurrentMetrics/>
+            <Today/>
+            <HueSwitches/>
+          </div>
+        </section>
+        <section className="forecast">
+          <h2>Forecast</h2>
+          <div className="content">
+            <Forecasts/>
+          </div>
+        </section>
+        <section className="ratp">
+          <h2>Transport</h2>
+          <div className="content">
+            <RATP/>
+          </div>
+        </section>
+        <section className="sensors-history">
+          <h2>Sensors history</h2>
+          <div className="content">
+            <GraphMetrics/>
+          </div>
+        </section>
         <div className="footer">
-          Made with love by Sylvain DOIGNON
+          Made with ❤ by Sylvain DOIGNON
         </div>
       </div>
     );

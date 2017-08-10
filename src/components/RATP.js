@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getRATPTraffic, getRATPRERASchedules, getRATPBUS118Schedules } from '../actions/RATP';
+import { getRATPTraffic, getRATPSchedules} from '../actions/RATP';
+import { runNowAndEvery } from "../misc.js"
 
 class RATP extends Component {
 
@@ -13,23 +14,12 @@ class RATP extends Component {
   }
 
   componentDidMount() {
-    this.fetchLastTraffic()
-    this.fetchLastSchedules()
-    setInterval(() => {
-      this.fetchLastTraffic()
-      this.fetchLastSchedules()
+    runNowAndEvery(() => {
+      this.props.getRATPTraffic()
+      this.props.getRATPSchedules()
     }, 16 * 1000)
   }
   
-  fetchLastTraffic() {
-    this.props.getRATPTraffic()
-  }
-  
-  fetchLastSchedules() {
-    this.props.getRATPRERASchedules()
-    this.props.getRATPBUS118Schedules()
-  }
-
   handleClick (e) {
     let k = e.target.getAttribute("data-key")
     let t = e.target.getAttribute("data-type")
@@ -45,17 +35,22 @@ class RATP extends Component {
       showTrafficDetail: true,
       trafficDetail: {
         line,
-        message: this.props.traffic[t][k].message
+        message: this.props.RATPTraffic[t][k].message
       }
     })
   }
 
   render () {
+    let RATPScheduleForRER = this.props.RATPSchedules.RER
+    let RATPScheduleForBUS = this.props.RATPSchedules.BUS
+    if (!this.props.RATPSchedulesAvailable) {
+      RATPScheduleForRER = RATPScheduleForBUS = [ "No data" ]
+    }
     return (
-      <div className="RATP">
-        <div className="Recap">
-          {Object.keys(this.props.traffic).map((e) => {
-            return <Recap handleClick={this.handleClick.bind(this)} key={e} type={e} data={this.props.traffic[e]}/>
+      <div>
+        <div className="ratp-lines-overview">
+          {(this.props.RATPTrafficAvailable) && Object.keys(this.props.RATPTraffic).map((e) => {
+            return <Recap handleClick={this.handleClick.bind(this)} key={e} type={e} data={this.props.RATPTraffic[e]}/>
           })}
           { (this.state.showTrafficDetail) &&
             <div className="message tabs-pane active">
@@ -65,8 +60,8 @@ class RATP extends Component {
           }
         </div>
         <div className="Next">
-          <Timetable schedules={this.props.scheduleRERA} name="RER A"/>
-          <Timetable schedules={this.props.scheduleBUS118} name="BUS 118"/>
+          <Timetable schedules={RATPScheduleForRER} name="RER A"/>
+          <Timetable schedules={RATPScheduleForBUS} name="BUS 118"/>
         </div>
       </div>
     )
@@ -98,7 +93,7 @@ function Recap (props) {
     return l
   }
   return (
-    <div className={"Recap-" + props.type}>
+    <div className={"ratp-overview-" + props.type}>
       <span className={typeToClass[props.type] + " symbole"}></span>
       {Object.keys(props.data).map((k) => {
         let className = typeToClass[props.type] + " ligne" + ligneFormat(k)
@@ -115,17 +110,17 @@ function Recap (props) {
 
 const mapStateToProps = (state) => {
     return {
-      traffic: state.getRATPTraffic,
-      scheduleRERA: state.getRATPRERASchedules,
-      scheduleBUS118: state.getRATPBUS118Schedules,
+      RATPTraffic: state.RATPTraffic,
+      RATPTrafficAvailable: state.RATPTrafficAvailable,
+      RATPSchedules: state.RATPSchedules,
+      RATPSchedulesAvailable: state.RATPSchedulesAvailable
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getRATPTraffic: () => dispatch(getRATPTraffic()),
-        getRATPRERASchedules: () => dispatch(getRATPRERASchedules()),
-        getRATPBUS118Schedules: () => dispatch(getRATPBUS118Schedules())
+        getRATPSchedules: () => dispatch(getRATPSchedules())
     };
 };
 

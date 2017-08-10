@@ -1,3 +1,5 @@
+import { config } from "../config.js"
+
 import axios from "axios"
 
 let a = axios.create()
@@ -75,7 +77,7 @@ const formatWeather = (json) => {
 
 export function getLastForecast() {
   return (dispatch) => {
-    a.get("http://api.openweathermap.org/data/2.5/forecast?id=6613142&mode=json&appid=6e2218dcec22c786e4a039dfe3bfae98&lang=fr&units=metrics")
+    a.get(`http://api.openweathermap.org/data/2.5/forecast?q=${config.FORECAST_CITY}&mode=json&appid=6e2218dcec22c786e4a039dfe3bfae98&lang=fr&units=metrics`)
     .then((res) => res.data)
     .then(formatWeather)
     .then((w) => {

@@ -1,25 +1,34 @@
-export function getRATPTraffic(state = {}, action) {
+export function RATPTraffic(state = {}, action) {
     switch (action.type) {
-        case 'GET_RATP_SUCCESS':
+        case 'RATP_TRAFFIC':
             return action.traffic;
         default:
             return state;
     }
 }
 
-export function getRATPBUS118Schedules(state = [], action) {
+export function RATPTrafficAvailable(state = false, action) {
     switch (action.type) {
-        case 'GET_RATP_BUS118_SCHEDULES_SUCCESS':
-            return action.schedules;
+        case 'RATP_TRAFFIC_AVAILABLE':
+            return action.status;
         default:
             return state;
     }
 }
 
-export function getRATPRERASchedules(state = [], action) {
+export function RATPSchedulesAvailable(state = false, action) {
     switch (action.type) {
-        case 'GET_RATP_RERA_SCHEDULES_SUCCESS':
-            return action.schedules;
+        case 'RATP_SCHEDULES_AVAILABLE':
+            return action.status;
+        default:
+            return state;
+    }
+}
+
+export function RATPSchedules (state = {RER: [], BUS: []}, action) {
+    switch (action.type) {
+        case 'RATP_SCHEDULES':
+            return action.schedules
         default:
             return state;
     }

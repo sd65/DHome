@@ -1,21 +1,33 @@
-export function getRATPTrafficSuccess (traffic) {
+import axios from "axios"
+
+let a = axios.create()
+a.defaults.timeout = 1000
+
+export function RATPTraffic (traffic) {
     return {
-        type: 'GET_RATP_SUCCESS',
+        type: 'RATP_TRAFFIC',
         traffic
     };
 }
 
-export function getRATPRERASchedulesSuccess(schedules) {
+export function RATPTrafficAvailable (status) {
     return {
-        type: 'GET_RATP_RERA_SCHEDULES_SUCCESS',
+        type: 'RATP_TRAFFIC_AVAILABLE',
+        status
+    };
+}
+
+export function RATPSchedules (schedules) {
+    return {
+        type: 'RATP_SCHEDULES',
         schedules
     };
 }
 
-export function getRATPBUS118SchedulesSuccess(schedules) {
+export function RATPSchedulesAvailable (status) {
     return {
-        type: 'GET_RATP_BUS118_SCHEDULES_SUCCESS',
-        schedules
+        type: 'RATP_SCHEDULES_AVAILABLE',
+        status
     };
 }
 
@@ -42,48 +54,36 @@ const formatJsonSchedules = (json) => {
 
 export function getRATPTraffic() {
   return (dispatch) => {
-    fetch("https://api-ratp.pierre-grimaud.fr/v3/traffic")
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
+    a.get("https://api-ratp.pierre-grimaud.fr/v3/traffic")
+    .then((j) => formatJsonTraffic(j.data))
+    .then((t) => {
+      dispatch(RATPTrafficAvailable(true))
+      dispatch(RATPTraffic(t))
     })
-    .then((response) => response.json())
-    .then(formatJsonTraffic)
-    .then((t) => dispatch(getRATPTrafficSuccess(t)))
-    .catch((e) => { console.error(e); dispatch(getRATPTrafficSuccess)});
+    .catch((e) => dispatch(RATPTrafficAvailable(false)))
   }
 }
 
-export function getRATPBUS118Schedules(url) {
-  return (dispatch) => {
-    fetch("https://api-ratp.pierre-grimaud.fr/v3/schedules/bus/118/general-de-gaulle/A")
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
-    .then((response) => response.json())
-    .then(formatJsonSchedules)
-    .then((s) => dispatch(getRATPBUS118SchedulesSuccess(s)))
-    .catch((e) => { console.error(e); dispatch(getRATPBUS118SchedulesSuccess)});
+export function getRATPSchedules () {
+  return async (dispatch) => {
+    try {
+      let [RER, BUS] = await Promise.all([
+        getRATPSchedulesByUrl("https://api-ratp.pierre-grimaud.fr/v3/schedules/rers/a/vincennes/R"),
+        getRATPSchedulesByUrl("https://api-ratp.pierre-grimaud.fr/v3/schedules/bus/118/general-de-gaulle/A")
+      ])
+      dispatch(RATPSchedulesAvailable(true))
+      dispatch(RATPSchedules({RER, BUS}))
+    } catch (e) {
+      dispatch(RATPSchedulesAvailable(false))
+    }
   }
 }
 
-export function getRATPRERASchedules(url) {
-  return (dispatch) => {
-    fetch("https://api-ratp.pierre-grimaud.fr/v3/schedules/rers/a/vincennes/R")
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
-    .then((response) => response.json())
-    .then(formatJsonSchedules)
-    .then((s) => dispatch(getRATPRERASchedulesSuccess(s)))
-    .catch((e) => { console.error(e); dispatch(getRATPRERASchedulesSuccess)});
-  }
+export function getRATPSchedulesByUrl (url) {
+  return new Promise ((resolve, reject) => {
+    a.get(url)
+    .then((j) => formatJsonSchedules(j.data))
+    .then(resolve)
+    .catch(reject)
+  })
 }

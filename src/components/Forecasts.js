@@ -16,13 +16,15 @@ class Forecasts extends Component {
       return <p>No forecast</p>
     }
     return (
-      <div className="forecast">
+      <div>
         <div className="forecast-cards">
           {Array.from(this.props.forecastForCards.entries()).map((r) => {
             return <ForecastCard key={r[0]} dayName={r[0]} forecast={r[1]}/>
           })}
         </div>
-        <ForecastsGraph rawData={this.props.forecastForGraph}/>
+        <div className="forecast-graph">
+          <ForecastsGraph rawData={this.props.forecastForGraph}/>
+        </div>
       </div>
     )
   }
@@ -52,14 +54,6 @@ function ForecastsGraph (props) {
     "Cloudiness": "%"
   }
   const options = {
-    title: {
-      display: true,
-      text: 'Weather Forecast',
-      fontSize: 25,
-      fontFamily: '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif',
-      fontStyle: "",
-      padding: 30
-    },
     legend: {
       labels: {
         usePointStyle: true,
@@ -123,9 +117,7 @@ function ForecastsGraph (props) {
     }
   }
   return (
-    <div className="forecast-graph">
-      <Bar data={data} options={options}/>
-    </div>
+    <Bar data={data} options={options}/>
   )
 }
 

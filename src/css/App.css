@@ -8,113 +8,57 @@ h1 {
   font-size: 3em;
 }
 
-.App-header {
-  display: grid;
-  grid-template-columns: 33.3% 33.3% 33.3%;
-  background-color: #00BCD4;
-  padding: 3em 0;
-  color: white;
-}
-
-.forecast-cards {
-  display: grid;
-  grid-template-columns: 20% 20% 20% 20% 20%;
-  padding-bottom: 2em;
-}
-
-.Weather {
-  background-color: #FFEB3B;
-  padding-top: 3em;
+section > h2 {
   text-align: center;
+  padding-bottom: 1em;
 }
 
-.symbole {
-  filter: grayscale(100%);
+section {
+  padding: 2em 0;
 }
 
-.Weather i {
-  color: white;
-}
-
-.RATP {
-  background-color: #009688;
-  padding: 3em 0;
-  color: white;
-}
-
-.RATP .message {
-  margin: 2em .3em 0 .3em;
-}
-
-.Next {
-  padding-top: 3em;
-}
-
-.forecast-graph, .graphMetrics {
-  background-color: white;
-}
-
-.Recap > div {
-  margin-top: 10px;
-}
-
-.RATP .Next {
+section .content {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
 }
 
-.Recap-metros {
-  display: grid;
-  grid-template-columns: repeat(17, 1fr);
-}
-
-.Recap-rers {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-}
-
-.Recap-tramways {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-}
-
-.Recap .message h3{
-  text-transform: uppercase
-}
-
-.Recap .travaux {
-   border: solid 4px #b8b8b8;
-   background-size: 100%;
-   border-radius: 33px;
-} 
-
-.Recap .pb {
-   border: solid 4px #f00;
-   background-size: 100%;
-   border-radius: 33px;
-} 
-
-.hue-switches, .last-sensors-metrics, .Today, .forecast-card, .timetable {
+.hue-switches, .last-sensors-metrics, .today, .forecast-card, .timetable {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 }
 
-.timetable {
-  justify-content: start;
+.today {
+  color: white;
+  background-color: #00BCD4;
+}
+
+.today .content {
+  margin-top: -2em;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .last-sensors-metrics > * {
   margin-top: 20px;
 }
 
-.Today > div {
-  margin-top: 20px;
-}
-
 .hue-switches > span:first-child {
   margin-bottom: 10px;
+}
+
+.forecast {
+  background-color: #FFEB3B;
+  padding-bottom: 0;
+}
+
+.forecast .content .forecast-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding-bottom: 2em;
+}
+
+.forecast i {
+  color: white;
 }
 
 .hasRain {
@@ -124,6 +68,70 @@ h1 {
 
 .forecast-card i {
   text-shadow: 1px 1px #b6b6b6;
+}
+
+.ratp {
+  background-color: #009688;
+  padding: 3em 0;
+  color: white;
+}
+
+.ratp .symbole {
+  filter: grayscale(100%);
+}
+
+.ratp .Next {
+  padding-top: 3em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ratp .timetable {
+  justify-content: start;
+}
+
+.ratp-lines-overview > div {
+  margin-top: 10px;
+}
+
+.ratp-overview-metros {
+  display: grid;
+  grid-template-columns: repeat(17, 1fr);
+}
+
+.ratp-overview-rers {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.ratp-overview-tramways {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.ratp-lines-overview .message h3{
+  text-transform: uppercase
+}
+
+.ratp-lines-overview .travaux {
+   border: solid 4px #b8b8b8;
+   background-size: 100%;
+   border-radius: 33px;
+} 
+
+.ratp-lines-overview .pb {
+   border: solid 4px #f00;
+   background-size: 100%;
+   border-radius: 33px;
+} 
+
+.sensors-history {
+  background: white;
+}
+
+.forecast-graph, .sensors-history-graph {
+  padding-top: 1em;
+  background-color: white;
 }
 
 .footer {
