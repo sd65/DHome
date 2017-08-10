@@ -1,29 +1,55 @@
-export function currentMetricsHasErrored(bool) {
+import { config } from "../config.js"
+
+import axios from "axios"
+
+let a = axios.create()
+a.defaults.timeout = 1000
+
+export function lastSensorsMetrics(metrics) {
     return {
-        type: 'CURRENT_METRICS_HAS_ERRORED',
-        hasErrored: bool
+        type: 'LAST_SENSORS_METRICS',
+        metrics
     };
+}
+  
+  
+const getMetric = (cm, m) => {
+  if (cm && cm.values && cm.columns) {
+    return cm.values[0][cm.columns.indexOf(m)]
+  }
+  return
 }
 
-export function currentMetricsFetchDataSuccess(currentMetrics) {
-    return {
-        type: 'CURRENT_METRICS_FETCH_DATA_SUCCESS',
-        currentMetrics
-    };
+const average = (arr) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+
+const getPressureTendency = (cm) => {
+  if (cm && cm.values && cm.columns) {
+    let index = cm.columns.indexOf("P")
+    let values = cm.values.map((e) => e[index])
+    let last20 = values.slice(-20)
+    let rest = values.slice(0, values.length - 20)
+    if (average(last20) > average(rest)) {
+      return 1
+    } else {
+      return -1
+    }
+  }
+  return
 }
-  
-  
-export function currentMetricsFetchData(url) {
+
+const formatMetrics = (metrics) => {
+    return {
+        T: getMetric(metrics, "T"),
+        H: getMetric(metrics, "H"),
+        P: getPressureTendency(metrics)
+    }
+}
+
+export function getLastSensorsMetrics() {
   return (dispatch) => {
-    fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
-    .then((response) => response.json())
-    .then((cm) => dispatch(currentMetricsFetchDataSuccess(cm)))
-    .catch(() => dispatch(currentMetricsHasErrored(true)));
+    a.get(`https://${config.API_HOST}:${config.API_PORT}/api/sensortag`)
+    .then((json) => formatMetrics(json.data))
+    .then((m) => dispatch(lastSensorsMetrics(m)))
+    .catch(() => dispatch(lastSensorsMetrics()));
   }
 }

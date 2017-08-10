@@ -1,3 +1,10 @@
+import { config } from "../config.js"
+
+import axios from "axios"
+
+let a = axios.create()
+a.defaults.timeout = 1000
+
 export function graphMetricsFetchDataSuccess(metrics) {
     return {
         type: 'GRAPH_METRICS_FETCH_DATA_SUCCESS',
@@ -8,15 +15,8 @@ export function graphMetricsFetchDataSuccess(metrics) {
   
 export function graphMetrics() {
   return (dispatch) => {
-    fetch("https://192.168.1.15:8000/api/sensortag2000")
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
-    .then((response) => response.json())
-    .then((cm) => dispatch(graphMetricsFetchDataSuccess(cm)))
+    a.get(`https://${config.API_HOST}:${config.API_PORT}/api/sensortag2000`)
+    .then((json) => dispatch(graphMetricsFetchDataSuccess(json.data)))
     .catch((e) => console.log(e));
   }
 }

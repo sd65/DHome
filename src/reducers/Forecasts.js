@@ -1,8 +1,17 @@
-export function getForecasts(state = { forecast: new Map(), forecastGraph: []}, action) {
+export function lastForecast(state = { forecastForCards: new Map(), forecastForGraph: []}, action) {
     switch (action.type) {
-        case 'GET_FORECASTS_SUCCESS':
-            return { forecast: action.forecast, forecastGraph: action.forecastGraph };
+        case 'LAST_FORECAST':
+            return { forecastForCards: action.forecastForCards, forecastForGraph: action.forecastForGraph };
         default:
-            return state;
+            return state
+    }
+}
+
+export function forecastAvailable(state = false, action) {
+    switch (action.type) {
+        case 'FORECAST_AVAILABLE':
+            return action.status
+        default:
+            return state
     }
 }

@@ -13,24 +13,27 @@ h1 {
   grid-template-columns: 33.3% 33.3% 33.3%;
   background-color: #00BCD4;
   padding: 3em 0;
+  color: white;
 }
 
-.ForecastsDays {
+.forecast-cards {
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;
+  padding-bottom: 2em;
 }
 
 .Weather {
   background-color: #FFEB3B;
   padding-top: 3em;
+  text-align: center;
+}
+
+.symbole {
+  filter: grayscale(100%);
 }
 
 .Weather i {
   color: white;
-}
-
-.ForecastsDays {
-  padding-bottom: 2em;
 }
 
 .RATP {
@@ -47,7 +50,7 @@ h1 {
   padding-top: 3em;
 }
 
-.forecastGraph, .graphMetrics {
+.forecast-graph, .graphMetrics {
   background-color: white;
 }
 
@@ -91,7 +94,7 @@ h1 {
    border-radius: 33px;
 } 
 
-.HueSwitches, .CurrentMetrics, .Today, .dayForecast, .timetable {
+.hue-switches, .last-sensors-metrics, .Today, .forecast-card, .timetable {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -102,7 +105,7 @@ h1 {
   justify-content: start;
 }
 
-.CurrentMetrics > * {
+.last-sensors-metrics > * {
   margin-top: 20px;
 }
 
@@ -110,12 +113,17 @@ h1 {
   margin-top: 20px;
 }
 
-.HueSwitches > span:first-child {
+.hue-switches > span:first-child {
   margin-bottom: 10px;
 }
 
 .hasRain {
-  color: blue
+  color: #1E88E5;
+  font-size: 2em;
+}
+
+.forecast-card i {
+  text-shadow: 1px 1px #b6b6b6;
 }
 
 .footer {

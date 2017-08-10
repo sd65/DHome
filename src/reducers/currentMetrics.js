@@ -1,17 +1,9 @@
-export function currentMetricsHasErrored(state = false, action) {
-    switch (action.type) {
-        case 'CURRENT_METRICS_HAS_ERRORED':
-            return action.hasErrored;
+let defState = {T: "-", H: "-", B: 0}
 
-        default:
-            return state;
-    }
-}
-
-export function currentMetrics(state = {}, action) {
+export function lastSensorsMetrics(state = defState, action) {
     switch (action.type) {
-        case 'CURRENT_METRICS_FETCH_DATA_SUCCESS':
-            return action.currentMetrics;
+        case 'LAST_SENSORS_METRICS':
+            return (action.metrics) ? action.metrics : defState;
         default:
             return state;
     }

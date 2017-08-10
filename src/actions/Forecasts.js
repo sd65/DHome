@@ -1,14 +1,25 @@
-export function getForecastsSuccess (weather) {
+import axios from "axios"
+
+let a = axios.create()
+a.defaults.timeout = 1000
+
+export function forecastAvailable(bool) {
     return {
-        type: 'GET_FORECASTS_SUCCESS',
-        forecast: weather.forecast,
-        forecastGraph: weather.forecastGraph,
+        type: 'FORECAST_AVAILABLE',
+        status: bool
     };
 }
 
+export function lastForecast (weather) {
+    return {
+        type: 'LAST_FORECAST',
+        forecastForCards: weather.forecastForCards,
+        forecastForGraph: weather.forecastForGraph,
+    };
+}
 
 const kelvinToCelcius = (k) => Number(Number(k - 273.15).toFixed(1))
-const moreCommon = (arr) => {
+const moreCommonItem = (arr) => {
   return arr.sort((a,b) => arr.filter(v => v===a).length - arr.filter(v => v===b).length).pop();
 }
   
@@ -16,10 +27,10 @@ const formatWeather = (json) => {
   if (json.cod !== "200") {
     throw new Error()
   }
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  // Forecast Cards
   let weather = new Map()
   json.list.map((e) => {
-    let day = days[(new Date(e.dt * 1000)).getDay()]
+    let day = (new Date(e.dt * 1000)).toLocaleDateString("en-US", { weekday: 'long' })
     let d
     if (!weather.has(day)) {
       if (weather.size > 4) {
@@ -36,7 +47,7 @@ const formatWeather = (json) => {
       d.maxTemp = e.main.temp_max
     }
     d.icon.push(e.weather[0].id)
-    if ("rain" in e) {
+    if ("rain" in e || "snow" in e) {
       d.hasRain = true
     }
     weather.set(day, d)
@@ -45,13 +56,12 @@ const formatWeather = (json) => {
   weather.forEach((v, k) => {
     v.minTemp = kelvinToCelcius(v.minTemp)
     v.maxTemp = kelvinToCelcius(v.maxTemp)
-    v.icon = moreCommon(v.icon)
+    v.icon = moreCommonItem(v.icon)
   })
   // Graph
   let graph = json.list.map((e) => {
-    let date = new Date(e.dt * 1000)
     return {
-      dt: days[date.getDay()].slice(0, 3) + " " + (date.getHours() + 1) + "h",
+      dt: new Date(e.dt * 1000),
       t: kelvinToCelcius(e.main.temp),
       p: e.main.pressure,
       h: e.main.humidity,
@@ -60,21 +70,18 @@ const formatWeather = (json) => {
       r: (e.rain) ? e.rain["3h"] : 0
     }
   })
-  return { forecast: weather, forecastGraph: graph }
+  return { forecastForCards: weather, forecastForGraph: graph }
 }
 
-export function getForecasts() {
+export function getLastForecast() {
   return (dispatch) => {
-    fetch("http://api.openweathermap.org/data/2.5/forecast?id=6613142&mode=json&appid=6e2218dcec22c786e4a039dfe3bfae98&lang=fr&units=metrics")
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
-    .then((response) => response.json())
+    a.get("http://api.openweathermap.org/data/2.5/forecast?id=6613142&mode=json&appid=6e2218dcec22c786e4a039dfe3bfae98&lang=fr&units=metrics")
+    .then((res) => res.data)
     .then(formatWeather)
-    .then((w) => dispatch(getForecastsSuccess(w)))
-    .catch((e) => { console.error(e); dispatch(getForecastsSuccess)});
+    .then((w) => {
+      dispatch(forecastAvailable(true))
+      dispatch(lastForecast(w))
+    })
+    .catch((e) => dispatch(forecastAvailable(false)))
   }
 }

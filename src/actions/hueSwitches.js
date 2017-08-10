@@ -1,7 +1,12 @@
-export function hueSwitchesDisconnected(bool) {
+import axios from "axios"
+
+let a = axios.create()
+a.defaults.timeout = 1000
+
+export function hueLightsReachable(bool) {
     return {
-        type: 'HUE_SWITCHES_DISCONNECTED',
-        disconnected: bool
+        type: 'HUE_LIGHTS_REACHABLE',
+        status: bool
     };
 }
 
@@ -24,7 +29,7 @@ export function hueSwitchesAllStatus(status) {
     };
 }
 
-export function hueSwitchesAll(bool) {
+export function setHueLightsStatus(bool) {
   return (dispatch) => {
     let options = {
       method: (bool) ? "POST" : "DELETE"
@@ -37,12 +42,11 @@ export function hueSwitchesAll(bool) {
       return response;
     })
     .then(() => dispatch(hueSwitchesAllSuccess()))
-    .catch(() => dispatch(hueSwitchesDisconnected(true)));
+    .catch(() => dispatch(hueLightsReachable(false)));
   }
 }
 
-export function hueSwitch(id, bool) {
-  console.log(id, bool)
+export function setHueLightStatus(id, bool) {
   return (dispatch) => {
     let options = {
       method: (bool) ? "POST" : "DELETE"
@@ -55,21 +59,18 @@ export function hueSwitch(id, bool) {
       return response;
     })
     .then(() => dispatch(hueSwitchSuccess()))
-    .catch(() => dispatch(hueSwitchesDisconnected(true)));
+    .catch(() => dispatch(hueLightsReachable(false)));
   }
 }
 
-export function hueSwitchesAllGetStatus() {
+export function getHueLightsStatus() {
   return (dispatch) => {
-    fetch("https://192.168.1.15:8000/api/lights")
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
+    a.get("https://192.168.1.15:8000/api/lights")
+    .then((response) => response.data)
+    .then((json) => {
+      dispatch(hueLightsReachable(true))
+      dispatch(hueSwitchesAllStatus(json))
     })
-    .then((response) => response.json())
-    .then((j) => dispatch(hueSwitchesAllStatus(j)))
-    .catch((e) => { console.log(e); dispatch(hueSwitchesDisconnected(true))});
+    .catch((e) => dispatch(hueLightsReachable(false)));
   }
 }

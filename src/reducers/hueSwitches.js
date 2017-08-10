@@ -1,7 +1,7 @@
-export function hueSwitchesDisconnected(state = false, action) {
+export function hueLightsReachable(state = false, action) {
     switch (action.type) {
-        case 'HUE_SWITCHES_DISCONNECTED':
-            return action.disconnected;
+        case 'HUE_LIGHTS_REACHABLE':
+            return action.status;
         default:
             return state;
     }
