@@ -1,3 +1,5 @@
+import { config } from "../config.js"
+
 import axios from "axios"
 
 let a = axios.create()
@@ -34,13 +36,7 @@ export function setHueLightsStatus(bool) {
     let options = {
       method: (bool) ? "POST" : "DELETE"
     }
-    fetch("https://192.168.1.15:8000/api/lights", options)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
+    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/lights`, options)
     .then(() => dispatch(hueSwitchesAllSuccess()))
     .catch(() => dispatch(hueLightsReachable(false)));
   }
@@ -51,13 +47,7 @@ export function setHueLightStatus(id, bool) {
     let options = {
       method: (bool) ? "POST" : "DELETE"
     }
-    fetch("https://192.168.1.15:8000/api/lights/" + id, options)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
+    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/lights/${id}`, options)
     .then(() => dispatch(hueSwitchSuccess()))
     .catch(() => dispatch(hueLightsReachable(false)));
   }
@@ -65,7 +55,7 @@ export function setHueLightStatus(id, bool) {
 
 export function getHueLightsStatus() {
   return (dispatch) => {
-    a.get("https://192.168.1.15:8000/api/lights")
+    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/lights`)
     .then((response) => response.data)
     .then((json) => {
       dispatch(hueLightsReachable(true))

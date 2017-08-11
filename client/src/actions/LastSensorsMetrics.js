@@ -3,7 +3,7 @@ import { config } from "../config.js"
 import axios from "axios"
 
 let a = axios.create()
-a.defaults.timeout = 1000
+a.defaults.timeout = 3000
 
 export function lastSensorsMetrics(metrics) {
     return {
@@ -47,9 +47,10 @@ const formatMetrics = (metrics) => {
 
 export function getLastSensorsMetrics() {
   return (dispatch) => {
-    a.get(`https://${config.API_HOST}:${config.API_PORT}/api/sensortag`)
+    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/last-sensors-metrics`)
     .then((json) => formatMetrics(json.data))
     .then((m) => dispatch(lastSensorsMetrics(m)))
+    .catch((e) => console.log(e))
     .catch(() => dispatch(lastSensorsMetrics()));
   }
 }

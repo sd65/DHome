@@ -21,7 +21,7 @@ export function sensorsHistoryAvailable (status) {
 
 export function getSensorsHistory() {
   return (dispatch) => {
-    a.get(`https://${config.API_HOST}:${config.API_PORT}/api/sensortag2000`)
+    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/last-sensors-metrics?n=200`)
     .then((json) => {
       dispatch(sensorsHistoryAvailable(true))
       dispatch(sensorsHistory(json.data))
