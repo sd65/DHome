@@ -5,18 +5,27 @@ import axios from "axios"
 let a = axios.create()
 a.defaults.timeout = 1000
 
-export function graphMetricsFetchDataSuccess(metrics) {
+export function sensorsHistory(sensorsHistory) {
     return {
-        type: 'GRAPH_METRICS_FETCH_DATA_SUCCESS',
-        metrics
+        type: 'SENSORS_HISTORY',
+        sensorsHistory
     };
 }
-  
-  
-export function graphMetrics() {
+
+export function sensorsHistoryAvailable (status) {
+    return {
+        type: 'SENSORS_HISTORY_AVAILABLE',
+        status
+    };
+}
+
+export function getSensorsHistory() {
   return (dispatch) => {
     a.get(`https://${config.API_HOST}:${config.API_PORT}/api/sensortag2000`)
-    .then((json) => dispatch(graphMetricsFetchDataSuccess(json.data)))
-    .catch((e) => console.log(e));
+    .then((json) => {
+      dispatch(sensorsHistoryAvailable(true))
+      dispatch(sensorsHistory(json.data))
+    })
+    .catch((e) => dispatch(sensorsHistoryAvailable(false)))
   }
 }

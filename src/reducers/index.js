@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import { lastSensorsMetrics } from './currentMetrics';
-import { graphMetrics } from './graphMetrics';
+import { sensorsHistory, sensorsHistoryAvailable } from './graphMetrics';
 import { hueLightsReachable, hueSwitchesAll, hueSwitchesAllStatus } from './hueSwitches';
 import { lastForecast, forecastAvailable } from './Forecasts';
 import { RATPTraffic, RATPTrafficAvailable, RATPSchedules, RATPSchedulesAvailable } from './RATP';
 
 export default combineReducers({
-    graphMetrics,
+    sensorsHistory,
+    sensorsHistoryAvailable,
     lastSensorsMetrics,
     hueSwitchesAll,
     hueLightsReachable,
