@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getLastForecast } from '../actions/Forecasts';
+import { getLastForecast } from '../actions/Forecast';
 import { runNowAndEvery } from "../misc.js"
 
 import {Bar} from 'react-chartjs-2'
 
-class Forecasts extends Component {
+class Forecast extends Component {
   
   componentDidMount() {
     runNowAndEvery(this.props.getLastForecast, 20 * 60 * 1000)
@@ -23,7 +23,7 @@ class Forecasts extends Component {
           })}
         </div>
         <div className="forecast-graph">
-          <ForecastsGraph rawData={this.props.forecastForGraph}/>
+          <ForecastGraph rawData={this.props.forecastForGraph}/>
         </div>
       </div>
     )
@@ -31,7 +31,7 @@ class Forecasts extends Component {
 
 }
 
-function ForecastsGraph (props) {
+function ForecastGraph (props) {
   const colors = { red: "rgb(255, 99, 132)", orange: "rgb(255, 159, 64)", yellow: "rgb(255, 205, 86)", blue: "rgb(54, 162, 235)", purple: "rgb(153, 102, 255)", grey: "rgb(201, 203, 207)" }
   const data = {
    labels: props.rawData.map((e) => e.dt),
@@ -147,4 +147,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Forecasts);
+export default connect(mapStateToProps, mapDispatchToProps)(Forecast);

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import CurrentMetrics from './CurrentMetrics';
-import GraphMetrics from './graphMetrics';
+import LastSensorsMetrics from './LastSensorsMetrics';
+import SensorsHistory from './SensorsHistory';
 import Today from './Today';
-import HueSwitches from './hueSwitches';
-import Forecasts from './Forecasts';
+import HueSwitches from './HueSwitches';
+import Forecast from './Forecast';
 import RATP from './RATP';
 
 import 'shoelace-css/dist/shoelace.css';
@@ -21,7 +21,7 @@ class App extends Component {
         <section className="today">
           <h2>Now</h2>
           <div className="content">
-            <CurrentMetrics/>
+            <LastSensorsMetrics/>
             <Today/>
             <HueSwitches/>
           </div>
@@ -29,7 +29,7 @@ class App extends Component {
         <section className="forecast">
           <h2>Forecast</h2>
           <div className="content">
-            <Forecasts/>
+            <Forecast/>
           </div>
         </section>
         <section className="ratp">
@@ -41,7 +41,7 @@ class App extends Component {
         <section className="sensors-history">
           <h2>Sensors history</h2>
           <div className="content">
-            <GraphMetrics/>
+            <SensorsHistory/>
           </div>
         </section>
         <div className="footer">

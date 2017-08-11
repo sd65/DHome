@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getHueLightsStatus, setHueLightStatus, setHueLightsStatus } from '../actions/hueSwitches';
+import { getHueLightsStatus, setHueLightStatus, setHueLightsStatus } from '../actions/HueSwitches';
 import { runNowAndEvery } from "../misc.js"
 
 class HueSwitches extends Component {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getSensorsHistory } from '../actions/graphMetrics';
+import { getSensorsHistory } from '../actions/SensorsHistory';
 import { runNowAndEvery } from "../misc.js"
 
 import {Line} from 'react-chartjs-2';
 
-class GraphMetrics extends Component {
+class SensorsHistory extends Component {
   
   componentDidMount() {
     runNowAndEvery(this.props.getSensorsHistory, 60 * 1000)
@@ -20,13 +20,13 @@ class GraphMetrics extends Component {
       values: this.props.sensorsHistory.values.map((e, i) => { return (i % 20 === 0) ? e : false }).filter(Boolean).reverse()
     } 
     return (
-      <GraphMetrics2 metrics={metrics}/>
+      <SensorsHistoryGraph metrics={metrics}/>
     )
   }
 
 }
 
-function GraphMetrics2 (props) {
+function SensorsHistoryGraph (props) {
   const colors = { red: "rgb(255, 99, 132)", orange: "rgb(255, 159, 64)", yellow: "rgb(255, 205, 86)", blue: "rgb(54, 162, 235)" }
   const data = {
    labels: props.metrics.values.map((e) => new Date(e[0])),
@@ -122,4 +122,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GraphMetrics);
+export default connect(mapStateToProps, mapDispatchToProps)(SensorsHistory);

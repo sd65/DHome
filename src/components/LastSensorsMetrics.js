@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getLastSensorsMetrics } from '../actions/currentMetrics';
+import { getLastSensorsMetrics } from '../actions/LastSensorsMetrics';
 import { runNowAndEvery } from "../misc.js"
 
-class CurrentMetrics extends Component {
+class LastSensorsMetrics extends Component {
   
   componentDidMount() {
     runNowAndEvery(this.props.getLastSensorsMetrics, 60 * 1000)
@@ -73,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentMetrics);
+export default connect(mapStateToProps, mapDispatchToProps)(LastSensorsMetrics);
