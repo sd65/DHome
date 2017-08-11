@@ -20,7 +20,13 @@ class SensorsHistory extends Component {
       values: this.props.sensorsHistory.values.map((e, i) => { return (i % 20 === 0) ? e : false }).filter(Boolean).reverse()
     } 
     return (
-      <SensorsHistoryGraph metrics={metrics}/>
+      <div>
+        <SensorsHistoryGraph metrics={metrics}/>
+        <div className="sensors-history-graph-time-range">
+          <button type="button" className="button-big button-block">Last Week</button>
+          <button type="button" className="button-big button-block">Last 24H</button>
+        </div>
+      </div>
     )
   }
 

@@ -129,6 +129,17 @@ section .content {
   background: white;
 }
 
+.sensors-history-graph-time-range {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 10px;
+  padding: 0 10px;
+}
+
+.sensors-history-graph-time-range .button-block{
+  margin: 0;
+}
+
 .forecast-graph, .sensors-history-graph {
   padding-top: 1em;
   background-color: white;
