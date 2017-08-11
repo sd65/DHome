@@ -1,31 +1,22 @@
 {
-  "name": "DHome",
+  "name": "dhome",
   "version": "1.0.0",
-  "description": "Home Domotic",
-  "private": true,
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Sylvain Doignon",
+  "license": "ISC",
   "dependencies": {
-    "axios": "^0.16.2",
-    "chart.js": "^2.6.0",
-    "react": "^15.6.1",
-    "react-chartjs-2": "^2.5.6",
-    "react-dom": "^15.6.1",
-    "react-redux": "^5.0.5",
-    "react-scripts": "1.0.10",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
-  },
-  "devDependencies": {
-    "eslint-plugin-react": "^6.6.0",
-    "open-weather-icons": "0.0.6",
-    "shoelace-css": "^1.0.0-beta8"
-  },
-  "author": "",
-  "license": "MIT",
-  "repository": ""
+    "bluebird": "^3.5.0",
+    "create-react-app": "^1.3.3",
+    "http2": "^3.3.6",
+    "libnmap": "^0.3.9",
+    "node-hue-api": "^2.4.2",
+    "pm2": "^2.6.1",
+    "pug": "^2.0.0-rc.2",
+    "sensortag": "^1.3.0",
+    "ws": "^3.0.0"
+  }
 }

@@ -1,4 +1,6 @@
-/coverage
-/dist
-/node_modules
+/client/coverage
+/client/dist
+node_modules
 npm-debug.log*
+/ssl/*
+!/ssl/.gitkeep
