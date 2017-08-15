@@ -15,9 +15,7 @@ a.defaults.timeout = 1000
 const hue = new Hue.HueApi(config.hue.host, config.hue.user)
 
 app.use('*', (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-//  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Origin", "*")
   next()
 })
 
@@ -101,10 +99,7 @@ app
 app.listen(config.app.port, () => {
   console.log('DHome running')
 })
-process.on('unhandledRejection', error => {
-  // Will print "unhandledRejection err is not defined"
-  console.log('unhandledRejection', error.message);
-});
+
 ;(async () => {
   try {
     console.log("Waiting for Sensortag...")
@@ -150,7 +145,7 @@ process.on('unhandledRejection', error => {
       await sensorTag.disableHumidityAsync()
       await sensorTag.disableBarometricPressureAsync()
       await sensorTag.disableLuxometerAsync()
-      await Promise.delay(60 * 1000)
+      await Promise.delay(5 * 60 * 1000)
     }
   } catch (e) {
     console.log("ERROR", e)

@@ -11,7 +11,7 @@ class SensorsHistory extends Component {
     super()
     this.state = {
       since: "24h",
-      groupBy: "10m"
+      groupBy: "20m"
     }
   }
   
@@ -27,7 +27,7 @@ class SensorsHistory extends Component {
     let text = e.target.innerText
     this.setState({
         since: (text.match(/Week/)) ? "7d" : "24h",
-        groupBy: (text.match(/Week/)) ? "1h" : "10m"
+        groupBy: (text.match(/Week/)) ? "1h" : "20m"
     }, () => this.getSensorsHistory())
   }
   
@@ -96,6 +96,11 @@ function SensorsHistoryGraph (props) {
       }],
       yAxes: [{
           type: "linear",
+          scaleLabel: {
+            display: true,
+            fontSize: 14,
+            labelString: "°C"
+          },
           display: true,
           position: "left",
           id: "main",
@@ -114,6 +119,11 @@ function SensorsHistoryGraph (props) {
           type: "linear",
           display: true,
           position: "right",
+          scaleLabel: {
+            display: true,
+            fontSize: 14,
+            labelString: "%"
+          },
           id: "hecto",
           ticks: {
             min: 0,

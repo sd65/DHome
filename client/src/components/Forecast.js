@@ -40,7 +40,7 @@ function ForecastGraph (props) {
       { label: "Humidity", data: props.rawData.map((e) => e.h), yAxisID: "hecto", fill: false, pointStyle: "triangle", pointRadius: 7, borderColor: colors.blue, backgroundColor: colors.blue, type: "line" },
       { label: "Pressure", data: props.rawData.map((e) => e.p), yAxisID: "hidden", fill: false, pointStyle: "rectRot", pointRadius: 7, borderColor: colors.orange, backgroundColor: colors.orange, type: "line" },
       { label: "Wind", data: props.rawData.map((e) => e.w), yAxisID: "main", fill: false, pointStyle: "rectRounded", pointRadius: 7, borderColor: colors.yellow, backgroundColor: colors.yellow, type: "line" },
-      { label: "Rain", data: props.rawData.map((e) => e.r), yAxisID: "main", pointRadius: 1, pointStyle: "rect", borderColor: colors.purple, backgroundColor: colors.purple, type: "line" },
+      { label: "Rain", data: props.rawData.map((e) => e.r), yAxisID: "rainMeter", pointRadius: 1, pointStyle: "rect", borderColor: colors.purple, backgroundColor: colors.purple, type: "line" },
       { label: "Cloudiness", data: props.rawData.map((e) => e.c), yAxisID: "hecto", pointStyle: "rect", pointRadius: 0, borderColor: colors.grey, backgroundColor: colors.grey, type: "line" },
       { label: "", data: props.rawData.map((e) => (e.dt.getHours() === 23) ? 1 : 0), yAxisID: "day", backgroundColor: "#606060", type: "bar" },
     ]
@@ -85,11 +85,28 @@ function ForecastGraph (props) {
       }],
       yAxes: [{
           type: "linear",
+          scaleLabel: {
+            display: true,
+            labelString: "°C"
+          },
           display: true,
           position: "left",
           id: "main",
-          labelString: "Celcius"
+      }, {
+          type: "linear",
+          scaleLabel: {
+            display: true,
+            labelString: "mm",
+            fontSize: 14
+          },
+          display: true,
+          position: "right",
+          ticks: {
+            suggestedMax: 4,
+          },
+          id: "rainMeter",
       }, 
+
       {
           display: false,
           position: "right",
@@ -100,6 +117,10 @@ function ForecastGraph (props) {
           display: true,
           position: "right",
           id: "hecto",
+          scaleLabel: {
+            display: true,
+            labelString: "%"
+          },
           ticks: {
             min: 0,
             max: 100
