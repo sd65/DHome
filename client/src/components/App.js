@@ -25,6 +25,9 @@ class App extends Component {
             <Today/>
             <HueSwitches/>
           </div>
+          <p contentEditable="true" style={{"text-align": "center"}}>
+            Todo is here !
+          </p>
         </section>
         <section className="forecast">
           <h2>Forecast</h2>

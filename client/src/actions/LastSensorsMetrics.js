@@ -24,7 +24,7 @@ const average = (arr) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
 
 const getPressureTendency = (cm) => {
   if (cm && cm.values && cm.columns) {
-    let index = cm.columns.indexOf("P")
+    let index = cm.columns.indexOf("last_P")
     let values = cm.values.map((e) => e[index])
     let last20 = values.slice(-20)
     let rest = values.slice(0, values.length - 20)
@@ -39,8 +39,8 @@ const getPressureTendency = (cm) => {
 
 const formatMetrics = (metrics) => {
     return {
-        T: getMetric(metrics, "T"),
-        H: getMetric(metrics, "H"),
+        T: getMetric(metrics, "last_T"),
+        H: getMetric(metrics, "last_H"),
         P: getPressureTendency(metrics)
     }
 }

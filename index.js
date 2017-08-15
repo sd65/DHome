@@ -25,10 +25,21 @@ app.use('*', (req, res, next) => {
 app
 .use(express.static('client/build'))
 .get('/api/last-sensors-metrics', (req, res) => {
-  let n = req.query.n || 1
   let url = new URL(config.influx.url)
   url.pathname = config.influx.pathQuery
-  url.search = `q=SELECT * FROM main ORDER BY time DESC LIMIT ${n}`
+  url.search = "q=SELECT LAST(*) FROM main&db=sensortag"
+  url.port = config.influx.port
+  a.get(url.href)
+  .then((j) => j.data.results[0].series[0])
+  .then((j) => res.json(j))
+  .catch(console.log)
+})
+.get('/api/sensors-metrics', (req, res) => {
+  let since = req.query.since || "24h"
+  let groupBy = req.query.groupBy || "10m"
+  let url = new URL(config.influx.url)
+  url.pathname = config.influx.pathQuery
+  url.search = `q=SELECT MEAN(*) FROM main WHERE time >= now() - ${since} GROUP BY time(${groupBy}) ORDER BY time ASC`
   url.search += "&db=sensortag"
   url.port = config.influx.port
   a.get(url.href)

@@ -21,7 +21,7 @@ section .content {
   display: grid;
 }
 
-.hue-switches, .last-sensors-metrics, .today, .forecast-card, .timetable {
+.hue-switches, .last-sensors-metrics, .today .content div, .forecast-card, .timetable {
   display: flex;
   align-items: center;
   flex-direction: column;

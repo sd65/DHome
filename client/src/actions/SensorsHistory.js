@@ -19,12 +19,27 @@ export function sensorsHistoryAvailable (status) {
     };
 }
 
-export function getSensorsHistory() {
+function formatJSON (json) {
+  let o = {}
+  json.columns.forEach((value, key) => {
+    let val
+    if (value === "time") {
+      val = json.values.map((e) => new Date(e[key])) 
+    } else {
+      val = json.values.map((e) => (e[key] !== null) ? Number(e[key]).toFixed(1) : null) 
+    }
+    o[value] = val
+  })
+  return o
+}
+
+export function getSensorsHistory(since, groupBy) {
   return (dispatch) => {
-    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/last-sensors-metrics?n=200`)
-    .then((json) => {
+    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/sensors-metrics?since=${since}&groupBy=${groupBy}`)
+    .then((j) => formatJSON(j.data))
+    .then((metrics) => {
       dispatch(sensorsHistoryAvailable(true))
-      dispatch(sensorsHistory(json.data))
+      dispatch(sensorsHistory(metrics))
     })
     .catch((e) => dispatch(sensorsHistoryAvailable(false)))
   }

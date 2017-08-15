@@ -31,7 +31,7 @@ class HueSwitches extends Component {
   
   componentWillReceiveProps (nextProps) {
     this.setState({
-      allLightsOn: nextProps.hueLightsStatus.map((e) => (e.reachable && e.on) || !e.reachable).every(Boolean),
+//      allLightsOn: nextProps.hueLightsStatus.map((e) => (e.reachable && e.on) || !e.reachable).every(Boolean),
       hueLightsStatus: nextProps.hueLightsStatus
     })
   }
