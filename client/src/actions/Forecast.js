@@ -38,7 +38,7 @@ const formatWeather = (json) => {
       if (weather.size > 4) {
         return 0
       }
-      d = { minTemp: Infinity, maxTemp: -Infinity, icon: [], hasRain: false }
+      d = { minTemp: Infinity, maxTemp: -Infinity, icon: [], water: [] }
     } else {
       d = weather.get(day)
     }
@@ -49,8 +49,11 @@ const formatWeather = (json) => {
       d.maxTemp = e.main.temp_max
     }
     d.icon.push(e.weather[0].id)
-    if ("rain" in e || "snow" in e) {
-      d.hasRain = true
+    if ("rain" in e && "3h" in e.rain) {
+      d.water.push(e.rain["3h"])
+    }
+    if ("snow" in e && "3h" in e.snow) {
+      d.water.push(e.snow["3h"])
     }
     weather.set(day, d)
     return 0
@@ -58,6 +61,8 @@ const formatWeather = (json) => {
   weather.forEach((v, k) => {
     v.minTemp = kelvinToCelcius(v.minTemp)
     v.maxTemp = kelvinToCelcius(v.maxTemp)
+    let water = v.water.reduce((a, b) => a + b, 0)
+    v.hasRain = (water > 0.2) ? true : false
     v.icon = moreCommonItem(v.icon)
   })
   // Graph
