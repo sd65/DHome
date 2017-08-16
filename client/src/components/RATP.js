@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getRATPTraffic, getRATPSchedules} from '../actions/RATP';
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { getRATPTraffic, getRATPSchedules} from "../actions/RATP"
 import { runNowAndEvery } from "../misc.js"
 
 class RATP extends Component {
@@ -109,19 +109,19 @@ function Recap (props) {
 }
 
 const mapStateToProps = (state) => {
-    return {
-      RATPTraffic: state.RATPTraffic,
-      RATPTrafficAvailable: state.RATPTrafficAvailable,
-      RATPSchedules: state.RATPSchedules,
-      RATPSchedulesAvailable: state.RATPSchedulesAvailable
-    }
-};
+  return {
+    RATPTraffic: state.RATPTraffic,
+    RATPTrafficAvailable: state.RATPTrafficAvailable,
+    RATPSchedules: state.RATPSchedules,
+    RATPSchedulesAvailable: state.RATPSchedulesAvailable
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getRATPTraffic: () => dispatch(getRATPTraffic()),
-        getRATPSchedules: () => dispatch(getRATPSchedules())
-    };
-};
+  return {
+    getRATPTraffic: () => dispatch(getRATPTraffic()),
+    getRATPSchedules: () => dispatch(getRATPSchedules())
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(RATP);
+export default connect(mapStateToProps, mapDispatchToProps)(RATP)

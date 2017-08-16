@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getSensorsHistory } from '../actions/SensorsHistory';
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { getSensorsHistory } from "../actions/SensorsHistory"
 import { runNowAndEvery } from "../misc.js"
 
-import {Line} from 'react-chartjs-2';
+import {Line} from "react-chartjs-2"
 
 class SensorsHistory extends Component {
   
@@ -26,8 +26,8 @@ class SensorsHistory extends Component {
   handleTimeRangeClick (e) {
     let text = e.target.innerText
     this.setState({
-        since: (text.match(/Week/)) ? "7d" : "24h",
-        groupBy: (text.match(/Week/)) ? "1h" : "20m"
+      since: (text.match(/Week/)) ? "7d" : "24h",
+      groupBy: (text.match(/Week/)) ? "1h" : "20m"
     }, () => this.getSensorsHistory())
   }
   
@@ -51,8 +51,8 @@ class SensorsHistory extends Component {
 function SensorsHistoryGraph (props) {
   const colors = { red: "rgb(255, 99, 132)", orange: "rgb(255, 159, 64)", yellow: "rgb(255, 205, 86)", blue: "rgb(54, 162, 235)" }
   const data = {
-   labels: props.metrics.time,
-   datasets: [
+    labels: props.metrics.time,
+    datasets: [
       { label: "Temperature", data: props.metrics.mean_T, yAxisID: "main", fill: false, pointRadius: 7, borderColor: colors.red, backgroundColor: colors.red },
       { label: "Humidity", data: props.metrics.mean_H, yAxisID: "hecto", fill: false, pointStyle: "triangle", pointRadius: 7, borderColor: colors.blue, backgroundColor: colors.blue },
       { label: "Pressure", data: props.metrics.mean_P,yAxisID: "hidden2", fill: false, pointStyle: "rectRot", pointRadius: 7, borderColor: colors.orange, backgroundColor: colors.orange },
@@ -76,18 +76,18 @@ function SensorsHistoryGraph (props) {
       callbacks: {
         label: (tooltipItems, data) => {
           let label = data.datasets[tooltipItems.datasetIndex].label
-          return label +': ' + tooltipItems.yLabel + labelToUnit[label];
+          return label +": " + tooltipItems.yLabel + labelToUnit[label]
         }
       }
     },
     scales: {
       xAxes: [{
-        type: 'time',
+        type: "time",
         time: {
           tooltipFormat: "dddd D MMMM [at] H[h]mm",
-          unit: 'hour',
+          unit: "hour",
           displayFormats: {
-            hour: 'ddd HH[h]'
+            hour: "ddd HH[h]"
           }
         },
         ticks: {
@@ -95,42 +95,42 @@ function SensorsHistoryGraph (props) {
         }
       }],
       yAxes: [{
-          type: "linear",
-          scaleLabel: {
-            display: true,
-            fontSize: 14,
-            labelString: "°C"
-          },
+        type: "linear",
+        scaleLabel: {
           display: true,
-          position: "left",
-          id: "main",
+          fontSize: 14,
+          labelString: "°C"
+        },
+        display: true,
+        position: "left",
+        id: "main",
       }, 
       {
-          display: false,
-          position: "right",
-          id: "hidden"
+        display: false,
+        position: "right",
+        id: "hidden"
       }, 
       {
-          display: false,
-          position: "right",
-          id: "hidden2"
+        display: false,
+        position: "right",
+        id: "hidden2"
       },
       {
-          type: "linear",
+        type: "linear",
+        display: true,
+        position: "right",
+        scaleLabel: {
           display: true,
-          position: "right",
-          scaleLabel: {
-            display: true,
-            fontSize: 14,
-            labelString: "%"
-          },
-          id: "hecto",
-          ticks: {
-            min: 0,
-            max: 100
-          }
+          fontSize: 14,
+          labelString: "%"
+        },
+        id: "hecto",
+        ticks: {
+          min: 0,
+          max: 100
+        }
       }
-    ],
+      ],
     }
   }
   return (
@@ -142,16 +142,16 @@ function SensorsHistoryGraph (props) {
 
 
 const mapStateToProps = (state) => {
-    return {
-        sensorsHistory: state.sensorsHistory,
-        sensorsHistoryAvailable: state.sensorsHistoryAvailable
-    };
-};
+  return {
+    sensorsHistory: state.sensorsHistory,
+    sensorsHistoryAvailable: state.sensorsHistoryAvailable
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getSensorsHistory: (n, g) => dispatch(getSensorsHistory(n, g))
-    };
-};
+  return {
+    getSensorsHistory: (n, g) => dispatch(getSensorsHistory(n, g))
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SensorsHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(SensorsHistory)

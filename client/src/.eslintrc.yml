@@ -1,0 +1,16 @@
+env:
+  browser: true
+  node: false
+extends: 
+  - '../../.eslintrc.yml'
+  - 'plugin:react/recommended'
+plugins:
+  - react
+parserOptions:
+  ecmaVersion: 2017
+  sourceType: "module"
+  ecmaFeatures:
+    "jsx": true
+rules:
+  react/prop-types:
+    - off

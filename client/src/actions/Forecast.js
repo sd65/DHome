@@ -6,23 +6,23 @@ let a = axios.create()
 a.defaults.timeout = 1000
 
 export function forecastAvailable(bool) {
-    return {
-        type: 'FORECAST_AVAILABLE',
-        status: bool
-    };
+  return {
+    type: "FORECAST_AVAILABLE",
+    status: bool
+  }
 }
 
 export function lastForecast (weather) {
-    return {
-        type: 'LAST_FORECAST',
-        forecastForCards: weather.forecastForCards,
-        forecastForGraph: weather.forecastForGraph,
-    };
+  return {
+    type: "LAST_FORECAST",
+    forecastForCards: weather.forecastForCards,
+    forecastForGraph: weather.forecastForGraph,
+  }
 }
 
 const kelvinToCelcius = (k) => Number(Number(k - 273.15).toFixed(1))
 const moreCommonItem = (arr) => {
-  return arr.sort((a,b) => arr.filter(v => v===a).length - arr.filter(v => v===b).length).pop();
+  return arr.sort((a,b) => arr.filter(v => v===a).length - arr.filter(v => v===b).length).pop()
 }
   
 const formatWeather = (json) => {
@@ -32,7 +32,7 @@ const formatWeather = (json) => {
   // Forecast Cards
   let weather = new Map()
   json.list.map((e) => {
-    let day = (new Date(e.dt * 1000)).toLocaleDateString("en-US", { weekday: 'long' })
+    let day = (new Date(e.dt * 1000)).toLocaleDateString("en-US", { weekday: "long" })
     let d
     if (!weather.has(day)) {
       if (weather.size > 4) {
@@ -58,7 +58,7 @@ const formatWeather = (json) => {
     weather.set(day, d)
     return 0
   })
-  weather.forEach((v, k) => {
+  weather.forEach((v) => {
     v.minTemp = kelvinToCelcius(v.minTemp)
     v.maxTemp = kelvinToCelcius(v.maxTemp)
     let water = v.water.reduce((a, b) => a + b, 0)
@@ -83,12 +83,12 @@ const formatWeather = (json) => {
 export function getLastForecast() {
   return (dispatch) => {
     a.get(`http://api.openweathermap.org/data/2.5/forecast?q=${config.FORECAST_CITY}&mode=json&appid=6e2218dcec22c786e4a039dfe3bfae98&lang=fr&units=metrics`)
-    .then((res) => res.data)
-    .then(formatWeather)
-    .then((w) => {
-      dispatch(forecastAvailable(true))
-      dispatch(lastForecast(w))
-    })
-    .catch((e) => dispatch(forecastAvailable(false)))
+      .then((res) => res.data)
+      .then(formatWeather)
+      .then((w) => {
+        dispatch(forecastAvailable(true))
+        dispatch(lastForecast(w))
+      })
+      .catch(() => dispatch(forecastAvailable(false)))
   }
 }

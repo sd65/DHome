@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react"
 
-function Today(props) {
+function Today() {
   return (
     <div className="today">
       <CurrentTime/>
       <CurrentDate/>
     </div>
-  );
+  )
 }
 class CurrentTime extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {date: new Date()}
   }
 
@@ -19,17 +19,17 @@ class CurrentTime extends React.Component {
     this.timerID = setInterval(
       () => this.tick(),
       1000
-    );
+    )
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerID);
+    clearInterval(this.timerID)
   }
 
   tick() {
     this.setState({
       date: new Date()
-    });
+    })
   }
 
   render() {
@@ -46,7 +46,7 @@ class CurrentTime extends React.Component {
 class CurrentDate extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {date: new Date()}
   }
 
@@ -59,18 +59,18 @@ class CurrentDate extends React.Component {
     this.timerID = setInterval(
       () => this.update(),
       s * 1000
-    );
+    )
   }
 
   secondsToMidnight() {
-    var now = new Date();
-    var then = new Date(now);
-    then.setHours(24, 0, 0, 0);
-    return (then - now) / 1000;
+    var now = new Date()
+    var then = new Date(now)
+    then.setHours(24, 0, 0, 0)
+    return (then - now) / 1000
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerID);
+    clearInterval(this.timerID)
   }
 
   update() {

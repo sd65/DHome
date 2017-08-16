@@ -4,31 +4,31 @@ let a = axios.create()
 a.defaults.timeout = 1000
 
 export function RATPTraffic (traffic) {
-    return {
-        type: 'RATP_TRAFFIC',
-        traffic
-    };
+  return {
+    type: "RATP_TRAFFIC",
+    traffic
+  }
 }
 
 export function RATPTrafficAvailable (status) {
-    return {
-        type: 'RATP_TRAFFIC_AVAILABLE',
-        status
-    };
+  return {
+    type: "RATP_TRAFFIC_AVAILABLE",
+    status
+  }
 }
 
 export function RATPSchedules (schedules) {
-    return {
-        type: 'RATP_SCHEDULES',
-        schedules
-    };
+  return {
+    type: "RATP_SCHEDULES",
+    schedules
+  }
 }
 
 export function RATPSchedulesAvailable (status) {
-    return {
-        type: 'RATP_SCHEDULES_AVAILABLE',
-        status
-    };
+  return {
+    type: "RATP_SCHEDULES_AVAILABLE",
+    status
+  }
 }
 
 const formatJsonTraffic = (json) => {
@@ -55,12 +55,12 @@ const formatJsonSchedules = (json) => {
 export function getRATPTraffic() {
   return (dispatch) => {
     a.get("https://api-ratp.pierre-grimaud.fr/v3/traffic")
-    .then((j) => formatJsonTraffic(j.data))
-    .then((t) => {
-      dispatch(RATPTrafficAvailable(true))
-      dispatch(RATPTraffic(t))
-    })
-    .catch((e) => dispatch(RATPTrafficAvailable(false)))
+      .then((j) => formatJsonTraffic(j.data))
+      .then((t) => {
+        dispatch(RATPTrafficAvailable(true))
+        dispatch(RATPTraffic(t))
+      })
+      .catch(() => dispatch(RATPTrafficAvailable(false)))
   }
 }
 
@@ -82,8 +82,8 @@ export function getRATPSchedules () {
 export function getRATPSchedulesByUrl (url) {
   return new Promise ((resolve, reject) => {
     a.get(url)
-    .then((j) => formatJsonSchedules(j.data))
-    .then(resolve)
-    .catch(reject)
+      .then((j) => formatJsonSchedules(j.data))
+      .then(resolve)
+      .catch(reject)
   })
 }

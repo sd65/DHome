@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getLastForecast } from '../actions/Forecast';
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { getLastForecast } from "../actions/Forecast"
 import { runNowAndEvery } from "../misc.js"
 
-import {Bar} from 'react-chartjs-2'
+import {Bar} from "react-chartjs-2"
 
 class Forecast extends Component {
   
@@ -34,8 +34,8 @@ class Forecast extends Component {
 function ForecastGraph (props) {
   const colors = { red: "rgb(255, 99, 132)", orange: "rgb(255, 159, 64)", yellow: "rgb(255, 205, 86)", blue: "rgb(54, 162, 235)", purple: "rgb(153, 102, 255)", grey: "rgb(201, 203, 207)" }
   const data = {
-   labels: props.rawData.map((e) => e.dt),
-   datasets: [
+    labels: props.rawData.map((e) => e.dt),
+    datasets: [
       { label: "Temperature", data: props.rawData.map((e) => e.t), yAxisID: "main", fill: false, pointRadius: 7, borderColor: colors.red, backgroundColor: colors.red, type: "line" },
       { label: "Humidity", data: props.rawData.map((e) => e.h), yAxisID: "hecto", fill: false, pointStyle: "triangle", pointRadius: 7, borderColor: colors.blue, backgroundColor: colors.blue, type: "line" },
       { label: "Pressure", data: props.rawData.map((e) => e.p), yAxisID: "hidden", fill: false, pointStyle: "rectRot", pointRadius: 7, borderColor: colors.orange, backgroundColor: colors.orange, type: "line" },
@@ -65,18 +65,18 @@ function ForecastGraph (props) {
       callbacks: {
         label: (tooltipItems, data) => {
           let label = data.datasets[tooltipItems.datasetIndex].label
-          return label +': ' + tooltipItems.yLabel + labelToUnit[label];
+          return label +": " + tooltipItems.yLabel + labelToUnit[label]
         }
       }
     },
     scales: {
       xAxes: [{
-        type: 'time',
+        type: "time",
         time: {
           tooltipFormat: "dddd D MMMM [at] H[h]",
-          unit: 'hour',
+          unit: "hour",
           displayFormats: {
-            hour: 'ddd HH[h]'
+            hour: "ddd HH[h]"
           }
         },
         ticks: {
@@ -84,57 +84,57 @@ function ForecastGraph (props) {
         }
       }],
       yAxes: [{
-          type: "linear",
-          scaleLabel: {
-            display: true,
-            labelString: "°C"
-          },
+        type: "linear",
+        scaleLabel: {
           display: true,
-          position: "left",
-          id: "main",
+          labelString: "°C"
+        },
+        display: true,
+        position: "left",
+        id: "main",
       }, {
-          type: "linear",
-          scaleLabel: {
-            display: true,
-            labelString: "mm",
-            fontSize: 14
-          },
+        type: "linear",
+        scaleLabel: {
           display: true,
-          position: "right",
-          ticks: {
-            suggestedMax: 4,
-          },
-          id: "rainMeter",
+          labelString: "mm",
+          fontSize: 14
+        },
+        display: true,
+        position: "right",
+        ticks: {
+          suggestedMax: 4,
+        },
+        id: "rainMeter",
       }, 
 
       {
-          display: false,
-          position: "right",
-          id: "hidden"
+        display: false,
+        position: "right",
+        id: "hidden"
       },
       {
-          type: "linear",
+        type: "linear",
+        display: true,
+        position: "right",
+        id: "hecto",
+        scaleLabel: {
           display: true,
-          position: "right",
-          id: "hecto",
-          scaleLabel: {
-            display: true,
-            labelString: "%"
-          },
-          ticks: {
-            min: 0,
-            max: 100
-          }
+          labelString: "%"
+        },
+        ticks: {
+          min: 0,
+          max: 100
+        }
       },
       {
-          display: false,
-          id: "day",
-          ticks: {
-            min: 0,
-            max: 1
-          }
+        display: false,
+        id: "day",
+        ticks: {
+          min: 0,
+          max: 1
+        }
       }
-    ],
+      ],
     }
   }
   return (
@@ -155,17 +155,17 @@ function ForecastCard (props) {
 }
 
 const mapStateToProps = (state) => {
-    return {
-      forecastAvailable: state.forecastAvailable,
-      forecastForCards: state.lastForecast.forecastForCards,
-      forecastForGraph: state.lastForecast.forecastForGraph
-    };
-};
+  return {
+    forecastAvailable: state.forecastAvailable,
+    forecastForCards: state.lastForecast.forecastForCards,
+    forecastForGraph: state.lastForecast.forecastForGraph
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getLastForecast: () => dispatch(getLastForecast())
-    };
-};
+  return {
+    getLastForecast: () => dispatch(getLastForecast())
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Forecast);
+export default connect(mapStateToProps, mapDispatchToProps)(Forecast)

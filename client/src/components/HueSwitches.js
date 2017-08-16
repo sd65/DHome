@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getHueLightsStatus, setHueLightStatus, setHueLightsStatus } from '../actions/HueSwitches';
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { getHueLightsStatus, setHueLightStatus, setHueLightsStatus } from "../actions/HueSwitches"
 import { runNowAndEvery } from "../misc.js"
 
 class HueSwitches extends Component {
@@ -31,7 +31,7 @@ class HueSwitches extends Component {
   
   componentWillReceiveProps (nextProps) {
     this.setState({
-//      allLightsOn: nextProps.hueLightsStatus.map((e) => (e.reachable && e.on) || !e.reachable).every(Boolean),
+      //      allLightsOn: nextProps.hueLightsStatus.map((e) => (e.reachable && e.on) || !e.reachable).every(Boolean),
       hueLightsStatus: nextProps.hueLightsStatus
     })
   }
@@ -40,15 +40,15 @@ class HueSwitches extends Component {
     return (
       <div className="hue-switches"> 
         { (!this.props.hueLightsReachable) ? (
-            <HueSwitch name="No reachable Hue lights" onChange={() => {}} on={false} disabled={true}/>
-          ) : (
-            <div>
-              <HueSwitch name="All" onChange={this.switchAllLightsStatus.bind(this)} on={this.state.allLightsOn}/>
-              {this.state.hueLightsStatus.map((e) => {
-                return <HueSwitch onChange={this.switchLightStatus.bind(this)} id={e.id} key={e.id} name={e.name} on={e.on} disabled={!e.reachable}/>
-              })}
-            </div>
-          )
+          <HueSwitch name="No reachable Hue lights" onChange={() => {}} on={false} disabled={true}/>
+        ) : (
+          <div>
+            <HueSwitch name="All" onChange={this.switchAllLightsStatus.bind(this)} on={this.state.allLightsOn}/>
+            {this.state.hueLightsStatus.map((e) => {
+              return <HueSwitch onChange={this.switchLightStatus.bind(this)} id={e.id} key={e.id} name={e.name} on={e.on} disabled={!e.reachable}/>
+            })}
+          </div>
+        )
         }
       </div>
     )
@@ -66,18 +66,18 @@ function HueSwitch (props) {
 }
 
 const mapStateToProps = (state) => {
-    return {
-      hueLightsReachable: state.hueLightsReachable,
-      hueLightsStatus: state.hueSwitchesAllStatus
-    };
-};
+  return {
+    hueLightsReachable: state.hueLightsReachable,
+    hueLightsStatus: state.hueSwitchesAllStatus
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        setHueLightsStatus: (bool) => dispatch(setHueLightStatus(bool)),
-        setHueLightStatus: (id, bool) => dispatch(setHueLightsStatus(id, bool)),
-        getHueLightsStatus: () => dispatch(getHueLightsStatus())
-    };
-};
+  return {
+    setHueLightsStatus: (bool) => dispatch(setHueLightStatus(bool)),
+    setHueLightStatus: (id, bool) => dispatch(setHueLightsStatus(id, bool)),
+    getHueLightsStatus: () => dispatch(getHueLightsStatus())
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(HueSwitches)

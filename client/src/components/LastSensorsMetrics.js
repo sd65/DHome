@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getLastSensorsMetrics } from '../actions/LastSensorsMetrics';
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { getLastSensorsMetrics } from "../actions/LastSensorsMetrics"
 import { runNowAndEvery } from "../misc.js"
 
 class LastSensorsMetrics extends Component {
@@ -25,7 +25,7 @@ function CurrentTemperature(props) {
   return (
     <h2>
       <span className="badge CurrentTemperature"> 
-      { props.value + "°C" }
+        { props.value + "°C" }
       </span>
     </h2>
   )
@@ -60,17 +60,17 @@ function CurrentBarometricTendency(props) {
 
 
 const mapStateToProps = (state) => {
-    return {
-        T: state.lastSensorsMetrics.T,
-        H: state.lastSensorsMetrics.H,
-        P: state.lastSensorsMetrics.P
-    }
+  return {
+    T: state.lastSensorsMetrics.T,
+    H: state.lastSensorsMetrics.H,
+    P: state.lastSensorsMetrics.P
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getLastSensorsMetrics: () => dispatch(getLastSensorsMetrics())
-    };
-};
+  return {
+    getLastSensorsMetrics: () => dispatch(getLastSensorsMetrics())
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LastSensorsMetrics);
+export default connect(mapStateToProps, mapDispatchToProps)(LastSensorsMetrics)

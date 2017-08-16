@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component } from "react"
 
-import LastSensorsMetrics from './LastSensorsMetrics';
-import SensorsHistory from './SensorsHistory';
-import Today from './Today';
-import HueSwitches from './HueSwitches';
-import Forecast from './Forecast';
-import RATP from './RATP';
+import LastSensorsMetrics from "./LastSensorsMetrics"
+import SensorsHistory from "./SensorsHistory"
+import Today from "./Today"
+import HueSwitches from "./HueSwitches"
+import Forecast from "./Forecast"
+import RATP from "./RATP"
 
-import 'shoelace-css/dist/shoelace.css';
-import 'open-weather-icons/dist/css/open-weather-icons.css';
-import '../css/metrodna.css';
-import '../css/App.css';
+import "shoelace-css/dist/shoelace.css"
+import "open-weather-icons/dist/css/open-weather-icons.css"
+import "../css/metrodna.css"
+import "../css/App.css"
 
 class App extends Component {
 
@@ -51,7 +51,7 @@ class App extends Component {
           Made with ❤ by Sylvain DOIGNON
         </div>
       </div>
-    );
+    )
   }
 
 }

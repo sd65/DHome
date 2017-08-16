@@ -6,10 +6,10 @@ let a = axios.create()
 a.defaults.timeout = 3000
 
 export function lastSensorsMetrics(metrics) {
-    return {
-        type: 'LAST_SENSORS_METRICS',
-        metrics
-    };
+  return {
+    type: "LAST_SENSORS_METRICS",
+    metrics
+  }
 }
   
   
@@ -20,7 +20,7 @@ const getMetric = (cm, m) => {
   return
 }
 
-const average = (arr) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+const average = (arr) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length
 
 const getPressureTendency = (cm) => {
   if (cm && cm.values && cm.columns) {
@@ -38,19 +38,18 @@ const getPressureTendency = (cm) => {
 }
 
 const formatMetrics = (metrics) => {
-    return {
-        T: getMetric(metrics, "last_T"),
-        H: getMetric(metrics, "last_H"),
-        P: getPressureTendency(metrics)
-    }
+  return {
+    T: getMetric(metrics, "last_T"),
+    H: getMetric(metrics, "last_H"),
+    P: getPressureTendency(metrics)
+  }
 }
 
 export function getLastSensorsMetrics() {
   return (dispatch) => {
     a.get(`http://${config.API_HOST}:${config.API_PORT}/api/last-sensors-metrics`)
-    .then((json) => formatMetrics(json.data))
-    .then((m) => dispatch(lastSensorsMetrics(m)))
-    .catch((e) => console.log(e))
-    .catch(() => dispatch(lastSensorsMetrics()));
+      .then((json) => formatMetrics(json.data))
+      .then((m) => dispatch(lastSensorsMetrics(m)))
+      .catch(() => dispatch(lastSensorsMetrics()))
   }
 }

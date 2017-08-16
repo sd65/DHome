@@ -6,17 +6,17 @@ let a = axios.create()
 a.defaults.timeout = 1000
 
 export function sensorsHistory(sensorsHistory) {
-    return {
-        type: 'SENSORS_HISTORY',
-        sensorsHistory
-    };
+  return {
+    type: "SENSORS_HISTORY",
+    sensorsHistory
+  }
 }
 
 export function sensorsHistoryAvailable (status) {
-    return {
-        type: 'SENSORS_HISTORY_AVAILABLE',
-        status
-    };
+  return {
+    type: "SENSORS_HISTORY_AVAILABLE",
+    status
+  }
 }
 
 function formatJSON (json) {
@@ -36,11 +36,11 @@ function formatJSON (json) {
 export function getSensorsHistory(since, groupBy) {
   return (dispatch) => {
     a.get(`http://${config.API_HOST}:${config.API_PORT}/api/sensors-metrics?since=${since}&groupBy=${groupBy}`)
-    .then((j) => formatJSON(j.data))
-    .then((metrics) => {
-      dispatch(sensorsHistoryAvailable(true))
-      dispatch(sensorsHistory(metrics))
-    })
-    .catch((e) => dispatch(sensorsHistoryAvailable(false)))
+      .then((j) => formatJSON(j.data))
+      .then((metrics) => {
+        dispatch(sensorsHistoryAvailable(true))
+        dispatch(sensorsHistory(metrics))
+      })
+      .catch(() => dispatch(sensorsHistoryAvailable(false)))
   }
 }
