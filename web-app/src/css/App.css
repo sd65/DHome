@@ -2,6 +2,10 @@
   --body-bg-color: rgb(255, 99, 71);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 h1 {
   padding: .3em 0;
   color: white;
@@ -145,8 +149,34 @@ section .content {
   background-color: white;
 }
 
+.forecast-graph {
+  position: relative;
+}
+
 .footer {
   text-align: center;
   color: white;
   padding: 3em;
+}
+
+
+@media screen and (max-width: 1024px){
+  .today .last-sensors-metrics h2,.today .today h2 { 
+    font-size: 1.4em;
+  }
+  .today .switch label {
+    --switch-size: 25px;
+    font-size: .8em;
+  }
+  .forecast .content, .ratp .content { 
+    display: block;
+  }
+  .forecast .content .forecast-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .metro, .tram, .transilien, .rer {
+    --size: 1.25em;
+    width: var(--size) !important;
+    height: var(--size);
+  }
 }

@@ -73,8 +73,8 @@ function Timetable (props) {
   return (
     <div className="timetable">
       <h3>{props.name}</h3>
-      {props.schedules.map((e) => {
-        return <div key={e}>{e}</div>
+      {props.schedules.map((e, i) => {
+        return <div key={i}>{e}</div>
       })}
     </div>
   )
