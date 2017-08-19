@@ -20,7 +20,10 @@ services:
   api:
     image: api
     build: api/
+    depends_on:
+      - influxdb
     networks:
+      frontend:
       backend:
         aliases:
           - api
@@ -29,6 +32,8 @@ services:
   nginx:
     image: nginx
     build: nginx/
+    depends_on:
+      - api
     networks:
       - frontend
       - backend
@@ -40,5 +45,7 @@ services:
   sensortag-manager:
     image: sensortag-manager
     build: sensortag-manager/
+    depends_on:
+      - influxdb
     privileged: true
     network_mode: host

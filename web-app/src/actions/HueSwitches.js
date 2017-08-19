@@ -36,7 +36,7 @@ export function setHueLightsStatus(bool) {
     let options = {
       method: (bool) ? "POST" : "DELETE"
     }
-    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/lights`, options)
+    a.request(`http://${config.API_HOST}:${config.API_PORT}/api/lights`, options)
       .then(() => dispatch(hueSwitchesAllSuccess()))
       .catch(() => dispatch(hueLightsReachable(false)))
   }
@@ -47,7 +47,7 @@ export function setHueLightStatus(id, bool) {
     let options = {
       method: (bool) ? "POST" : "DELETE"
     }
-    a.get(`http://${config.API_HOST}:${config.API_PORT}/api/lights/${id}`, options)
+    a.request(`http://${config.API_HOST}:${config.API_PORT}/api/lights/${id}`, options)
       .then(() => dispatch(hueSwitchSuccess()))
       .catch(() => dispatch(hueLightsReachable(false)))
   }

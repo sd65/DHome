@@ -46,18 +46,23 @@ app
       .catch((e) => console.error(e))
   })
   .get("/api/lights", async (req, res) => {
-    let allLights = await hue.lights()
-    let status = allLights.lights.map((e) => {
-      return {
-        id: e.id,
-        name: e.name,
-        reachable: e.state.reachable,
-        on: e.state.on
-      }
-    })
-    res.json(status)
+    try {
+      let allLights = await hue.lights()
+      let status = allLights.lights.map((e) => {
+        return {
+          id: e.id,
+          name: e.name,
+          reachable: e.state.reachable,
+          on: e.state.on
+        }
+      })
+      res.json(status)
+    } catch (e) {
+      console.error(e)
+      res.sendStatus(400).end()
+    }
   })
-  .post("/api/lights/:id", (req, res) => {
+  .post("/api/lights/:id?", (req, res) => {
     let id = Number(req.params.id)
     let state = Hue.lightState.create().on()
     if (id) {
@@ -65,9 +70,9 @@ app
     } else {
       hue.setGroupLightState(1, state)
     }
-    res.end()
+    res.sendStatus(200).end()
   })
-  .delete("/api/lights/:id", (req, res) => {
+  .delete("/api/lights/:id?", (req, res) => {
     let id = Number(req.params.id)
     let state = Hue.lightState.create().off()
     if (id) {
@@ -75,7 +80,7 @@ app
     } else {
       hue.setGroupLightState(1, state)
     }
-    res.end()
+    res.sendStatus(200).end()
   })
   .put("/api/lights/:id", (req, res) => {
     let wantedState
@@ -94,7 +99,7 @@ app
     }
     state.hsb(wantedState.h, wantedState.s, wantedState.b).on()
     hue.setGroupLightState(1, state)
-    res.end()
+    res.sendStatus(200).end()
   })
 
 app.listen(config.app.port, () => {

@@ -19,14 +19,14 @@ class HueSwitches extends Component {
   
   switchAllLightsStatus () {
     this.props.setHueLightsStatus(!this.state.allLightsOn)
-    setTimeout(this.props.hueSwitchesAllGetStatus, 50)
+    setTimeout(this.props.getHueLightsStatus, 50)
   }
   
   switchLightStatus (e) {
     let id = String(e.target.getAttribute("data-id"))
     let isOn = this.state.hueLightsStatus.map((e) => e.id === id && e.on).some(Boolean)
-    this.props.setHueLightsStatus(id, !isOn)
-    setTimeout(this.props.hueSwitchesAllGetStatus, 50)
+    this.props.setHueLightStatus(id, !isOn)
+    setTimeout(this.props.getHueLightsStatus, 50)
   }
   
   componentWillReceiveProps (nextProps) {
@@ -74,8 +74,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setHueLightsStatus: (bool) => dispatch(setHueLightStatus(bool)),
-    setHueLightStatus: (id, bool) => dispatch(setHueLightsStatus(id, bool)),
+    setHueLightsStatus: (bool) => dispatch(setHueLightsStatus(bool)),
+    setHueLightStatus: (id, bool) => dispatch(setHueLightStatus(id, bool)),
     getHueLightsStatus: () => dispatch(getHueLightsStatus())
   }
 }
