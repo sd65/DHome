@@ -1,0 +1,44 @@
+version: "3"
+networks:
+  backend:
+    internal: true
+  frontend:
+services:
+  influxdb:
+    image: hypriot/rpi-influxdb:latest
+    ports:
+      - 8086:8086
+    networks:
+      frontend:
+      backend:
+        aliases:
+          - influxdb
+    volumes:
+      - ./influxdb/data:/data
+    environment:
+      - PRE_CREATE_DB=sensortag
+  api:
+    image: api
+    build: api/
+    networks:
+      backend:
+        aliases:
+          - api
+    ports:
+      - 8000:8000
+  nginx:
+    image: nginx
+    build: nginx/
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - ./web-app/build:/srv
+    ports:
+      - 80:8080
+      - 443:8081
+  sensortag-manager:
+    image: sensortag-manager
+    build: sensortag-manager/
+    privileged: true
+    network_mode: host

@@ -65,7 +65,10 @@ function ForecastGraph (props) {
       callbacks: {
         label: (tooltipItems, data) => {
           let label = data.datasets[tooltipItems.datasetIndex].label
-          return label +": " + tooltipItems.yLabel + labelToUnit[label]
+          if (label) {
+            return label +": " + tooltipItems.yLabel + labelToUnit[label]
+          }
+          return "Night time"
         }
       }
     },
