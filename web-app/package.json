@@ -10,7 +10,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "chart.js": "^2.6.0",
     "react": "^15.6.1",
     "react-chartjs-2": "^2.5.6",
